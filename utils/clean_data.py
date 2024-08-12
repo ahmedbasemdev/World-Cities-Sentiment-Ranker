@@ -21,7 +21,7 @@ def remove_link_hashtag_mentions(text):
 def text_process_pipeline(text):
     text = remove_link_hashtag_mentions(text)
     text = text.strip()
-    if len(text.split() < 10):
+    if len(text.split()) < 10:
         return None
 
     return text

@@ -13,6 +13,7 @@ for city in get_cities_scrap():
     data = scrap_manager.scrap_city(city=city, max_items=4)
     data = pd.DataFrame(data)
     data['text'] = data['text'].apply(text_process_pipeline)
+    data = data.dropna(axis=0)
 
     ############################################
     ## Sending data to API to be stored in DB ##
