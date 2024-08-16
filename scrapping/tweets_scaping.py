@@ -8,7 +8,7 @@ class TweetsScraperManager:
         self.actor_api = f"https://api.apify.com/v2/acts/{self.actor_id}/run-sync"
 
     def scrap_city(self, city: str, max_items:int=50):
-        self.__run_scrapping_actor(city, max_items)
+        #self.__run_scrapping_actor(city, max_items)
         self.data_id = self.__get_data_id()
         if self.data_id == False:
             print("None")
