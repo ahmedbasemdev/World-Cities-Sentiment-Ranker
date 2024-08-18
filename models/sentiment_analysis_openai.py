@@ -89,7 +89,7 @@ class SentimentAnalysisManager:
         return df
 
     
-    def perfrom_data_sentiment(self, data, city:str):
+    def perfrom_data_sentiment(self, data, city_id):
         tasks = self.__generate_tasks(data)
         self.__generate_jsonl_file(tasks)
         batch_id = self.__run_batch()
@@ -107,7 +107,7 @@ class SentimentAnalysisManager:
             result_file_id = batch_job.output_file_id
             results = self.client.files.content(result_file_id).text
         else:
-            logging.error(f"Number of Success Tasks Less than 80% for city = {city}")
+            logging.error(f"Number of Success Tasks Less than 80% for city = {city_id}")
         
         df = self.__convert_results_df(results)
 

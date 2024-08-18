@@ -16,8 +16,6 @@ def remove_link_hashtag_mentions(text):
     return text
 
 
-
-
 def text_process_pipeline(text):
     text = remove_link_hashtag_mentions(text)
     text = text.strip()
