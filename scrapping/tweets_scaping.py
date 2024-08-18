@@ -1,5 +1,8 @@
 import requests
 import os
+from utils import get_yesterday_str
+import pandas as pd
+import logging
 
 class TweetsScraperManager:
     def __init__(self):
@@ -14,17 +17,23 @@ class TweetsScraperManager:
             print("None")
             return None
         data = self.__retrive_data()
+        data = pd.DataFrame(data)
+        if data.shape[0] < 10:
+            logging.error("Scraped Data Is Less than 10 Tweets")
+            return None
         return data
 
     def __run_scrapping_actor(self, city_coordinates, max_items:int=50):
         # Define the input parameters for the API
+        print(get_yesterday_str())
         inputs = {
             "geocode": city_coordinates,
             "minimumFavorites": 100,
             "minimumRetweets":100,
             "query": "news",
-            "onlyVerifiedUsers":True,
+            "onlyVerifiedUsers":False,
             "searchMode": "recent",
+            "start":get_yesterday_str()
         }
 
         params = {"token": self.token, "maxItems": max_items}

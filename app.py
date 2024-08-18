@@ -2,7 +2,7 @@ from models.sentiment_analysis_openai import SentimentAnalysisManager
 from scrapping.tweets_scaping import TweetsScraperManager
 from utils.clean_data import text_process_pipeline
 from dotenv import load_dotenv
-from apis.api_manager import get_cities_scrap
+from apis.api_manager import get_cities_scrap, send_tweets_sentiment
 import pandas as pd
 import logging
 from utils.helpers import convert_df2json
@@ -17,7 +17,6 @@ sentiment_manager = SentimentAnalysisManager()
 for city_id, city_coordinates in get_cities_scrap():
     print(city_id, city_coordinates)
     data = scrap_manager.scrap_city(city_coordinates=city_coordinates, max_items=50)
-    data = pd.DataFrame(data)
     data['text'] = data['text'].apply(text_process_pipeline)
     data = data.dropna(axis=0)
     sentiment_df = sentiment_manager.perfrom_data_sentiment(data,city_id)
@@ -25,5 +24,5 @@ for city_id, city_coordinates in get_cities_scrap():
     full_data['city_id'] = city_id
     full_data.to_csv("full_data.csv")
     list_json = convert_df2json(full_data)
-    print(list_json)
+    print(send_tweets_sentiment(list_json))
     
