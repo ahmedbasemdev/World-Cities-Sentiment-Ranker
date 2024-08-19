@@ -22,10 +22,8 @@ def send_tweets_sentiment(json_list):
     try:
         response = requests.post(send_tweets_sentiment_api, json=json_list)
         if response.status_code == 200:
-            print("Data sent successfully")
             return True
         else:
-            print(f"Error: API request failed with status code {response.status_code}")
             logging.error(f"Send Data: API request failed with status code {response.status_code}")
             return False
     except:
