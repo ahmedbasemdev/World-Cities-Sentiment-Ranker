@@ -16,13 +16,15 @@ sentiment_manager = SentimentAnalysisManager()
 
 for city_id, city_coordinates in get_cities_scrap():
     print(city_id, city_coordinates)
-    data = scrap_manager.scrap_city(city_coordinates=city_coordinates, max_items=50)
+    data = scrap_manager.scrap_city(city_coordinates=city_coordinates, max_items=100)
     data['text'] = data['text'].apply(text_process_pipeline)
     data = data.dropna(axis=0)
     sentiment_df = sentiment_manager.perfrom_data_sentiment(data,city_id)
     full_data = pd.merge(data, sentiment_df, on='id')
     full_data['city_id'] = city_id
-    full_data.to_csv("full_data.csv")
+    #full_data.to_csv("full_data.csv")
     list_json = convert_df2json(full_data)
-    print(send_tweets_sentiment(list_json))
+    status = send_tweets_sentiment(list_json)
+    if status == False:
+        send_tweets_sentiment(list_json)
     
