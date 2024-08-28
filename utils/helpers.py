@@ -1,7 +1,7 @@
 import json
 import datetime
 
-wanted_columns = ["url","id","text","createdAt","sentiment",'city_id']
+wanted_columns = ["url","id","text","sentiment",'city_id']
 def convert_df2json(df):
     df = df[wanted_columns]
     df.loc[:,'type']='tweet'

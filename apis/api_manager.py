@@ -13,8 +13,6 @@ def get_cities_scrap():
         logging.error(f"During Fetching Cities, API request failed with status code {response.status_code}")
     
     for item in data:
-        if item['name'] != "Amsterdam":
-            continue
         coordinates = f"{item['coordinates']['lat']},{item['coordinates']['long']},{RADIUS}km"
         yield item['id'], coordinates
 

@@ -22,9 +22,10 @@ for city_id, city_coordinates in get_cities_scrap():
     sentiment_df = sentiment_manager.perfrom_data_sentiment(data,city_id)
     full_data = pd.merge(data, sentiment_df, on='id')
     full_data['city_id'] = city_id
-    #full_data.to_csv("full_data.csv")
+    #full_data.to_csv(f"full_data_{city_id}.csv")
     list_json = convert_df2json(full_data)
     status = send_tweets_sentiment(list_json)
+    print(status)
     if status == False:
         send_tweets_sentiment(list_json)
     
